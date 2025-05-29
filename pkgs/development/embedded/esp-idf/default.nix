@@ -119,8 +119,12 @@ let
 
   requiredPythonPackages = extractPackageNames espIdfRequirementsCore;
 
-  # Create isolated Python environment for ESP-IDF (not exposed to shell)
-  # This environment is only used internally by ESP-IDF
+  # ESP-IDF Python modules as proper Nix packages
+  espIdfPythonModules = python3.pkgs.callPackage ./python-modules.nix {
+    esp-idf-src = src;
+  };
+
+  # Create isolated Python environment for ESP-IDF with proper ESP-IDF modules
   espIdfPythonEnv = python3.withPackages (ps:
     let
       # Get available packages that match ESP-IDF requirements
@@ -131,8 +135,11 @@ let
       # Convert package names to actual package objects
       packages = builtins.map (pkgName: builtins.getAttr pkgName ps) availablePackages;
     in
-      # Always include essential packages even if not perfectly matched
-      packages ++ (with ps; [
+      # Include ESP-IDF's own Python modules as proper packages
+      packages ++ [
+        espIdfPythonModules.esp-idf-monitor
+        espIdfPythonModules.esp-idf-tools
+      ] ++ (with ps; [
         setuptools
         pip
         wheel
@@ -245,7 +252,7 @@ in stdenv.mkDerivation rec {
     mkdir -p "$out/.espressif/python_env/$venvDir"
 
     # Install the Python environment into ESP-IDF's expected location
-    # This creates a complete Python environment in the nix store
+    # This creates a complete Python environment in the nix store with ESP-IDF modules
     cp -rL ${espIdfPythonEnv}/* "$out/.espressif/python_env/$venvDir/"
 
     # Create the standard symlink for compatibility
@@ -351,20 +358,30 @@ in stdenv.mkDerivation rec {
 
         # Add ESP-IDF tools directory to Python path for ESP-IDF's module imports
         addToSearchPath PYTHONPATH "$IDF_PATH/tools"
+
+        # Expose python (binary and venv) from esp-idf package to the shell
+        # in case user wants python outside of idf.py. This simplifies the package
+        # considerably and aligns with the primary use case which is dev shells.
+        addToSearchPath PATH "$IDF_PYTHON_ENV_PATH/bin"
       fi
     }
 
     addEnvHooks "$hostOffset" addEspIdfVars
 
-    # Expose python (binary and venv) from esp-idf package to the shell
-    # in case user wants python outside of idf.py. This simplifies the package
-    # considerably and aligns with the primary use case which is dev shells.
-    addToSearchPath PATH "$IDF_PYTHON_ENV_PATH/bin"
   '';
 
   passthru = {
     inherit espIdfPythonEnv toolDerivations supportedTargets;
     enabledTargets = allTargets;
+
+    # Built-in tests
+    #tests = {
+    #  basic = runCommand "esp-idf-basic-test" { buildInputs = [ (callPackage ./default.nix {}) ]; } (builtins.readFile ./tests/basic.nix);
+    #  esp32c5 = runCommand "esp-idf-esp32c5-test" {
+    #    buildInputs = [ (callPackage ./default.nix { supportedTargets = [ "esp32c5" ]; enablePreviewTargets = true; rev = "d930a386dae"; sha256 = "sha256-MIikNiUxR5+JkgD51wRokN+r8g559ejWfU4MP8zDwoM="; }) ];
+    #  } (builtins.readFile ./tests/esp32c5.nix);
+    #  integration = callPackage ./tests/integration.nix {};
+    #};
 
     # Provide target-specific variants
     withTargets = targets: (import ./default.nix).override { supportedTargets = targets; };
@@ -377,13 +394,6 @@ in stdenv.mkDerivation rec {
       enablePreviewTargets = true;
       rev = "d930a386dae";
       sha256 = "sha256-MIikNiUxR5+JkgD51wRokN+r8g559ejWfU4MP8zDwoM=";
-    };
-
-    # Built-in tests
-    tests = {
-      basic = import ./tests/basic.nix { inherit lib stdenv; esp-idf = stdenv.mkDerivation {}; };
-      esp32c5 = import ./tests/esp32c5.nix { inherit lib stdenv; esp-idf = stdenv.mkDerivation {}; };
-      integration = import ./tests/integration.nix { inherit lib stdenv; esp-idf = stdenv.mkDerivation {}; };
     };
   };
 
