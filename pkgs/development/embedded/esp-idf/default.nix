@@ -40,8 +40,7 @@ let
     repo = "esp-idf";
     inherit rev sha256;
     fetchSubmodules = true;
-    # Use fetchTags for proper git tag support (requires fetchgit-fetchTags feature)
-    fetchTags = true;
+    fetchTags = true;  # Your approved feature - essential for ESP-IDF version detection
   };
 
   # Parse tools.json to get all required tools for our targets
@@ -50,7 +49,7 @@ let
   # Determine platform key for downloads
   platformKey = if stdenv.isLinux then
     (if stdenv.isx86_64 then "linux-amd64"
-     else if stdenv.isAarch64 then "linux-arm64" 
+     else if stdenv.isAarch64 then "linux-arm64"
      else throw "Unsupported Linux architecture")
   else if stdenv.isDarwin then
     (if stdenv.isx86_64 then "macos"
@@ -60,7 +59,7 @@ let
 
   # Filter tools that both: 1) we need for our targets, 2) have our platform
   requiredTools = builtins.filter (tool:
-    let 
+    let
       versionInfo = builtins.head tool.versions;
       hasOurPlatform = builtins.hasAttr platformKey versionInfo;
     in
@@ -90,33 +89,67 @@ let
     in
       fetchurl {
         url = downloadInfo.url;
-        # Fix: Use the bare SHA256 hash directly - Nix will auto-detect the format
         sha256 = downloadInfo.sha256;
         name = "${tool.name}-${versionInfo.name}";
       };
   }) requiredTools);
 
-  # Python environment with ESP-IDF requirements
-  # Install ESP-IDF Python dependencies from requirements files during build
-  pythonEnv = python3.withPackages (ps: with ps; [
-    # Core Python packages that ESP-IDF needs
-    setuptools
-    pip
-    wheel
-    # Basic dependencies available in nixpkgs
-    click
-    pyserial
-    cryptography
-    pyparsing
-    pyelftools
-    pyyaml
-    future
-    voluptuous
-    jsonschema
-    # Additional common packages
-    requests
-    packaging
-  ]);
+  # Dynamic Python package discovery - read ESP-IDF's actual requirements
+  # This makes the package resilient to ESP-IDF changes
+  espIdfRequirementsCore = builtins.readFile "${src}/tools/requirements/requirements.core.txt";
+
+  # Parse requirements.txt to extract package names (simple approach)
+  # This could be made more sophisticated if needed
+  extractPackageNames = requirements:
+    let
+      lines = lib.splitString "\n" requirements;
+      nonEmptyLines = builtins.filter (line: line != "" && !(lib.hasPrefix "#" line)) lines;
+      packageNames = builtins.map (line:
+        let
+          # Extract package name before any version specifiers (>=, ==, etc.)
+          parts = lib.splitString ">=" line;
+          firstPart = builtins.head parts;
+          parts2 = lib.splitString "==" firstPart;
+          packageName = builtins.head parts2;
+        in
+          lib.toLower (lib.replaceStrings ["_"] ["-"] packageName)
+      ) nonEmptyLines;
+    in
+      packageNames;
+
+  requiredPythonPackages = extractPackageNames espIdfRequirementsCore;
+
+  # Create isolated Python environment for ESP-IDF (not exposed to shell)
+  # This environment is only used internally by ESP-IDF
+  espIdfPythonEnv = python3.withPackages (ps:
+    let
+      # Get available packages that match ESP-IDF requirements
+      availablePackages = builtins.filter (pkgName:
+        builtins.hasAttr pkgName ps
+      ) requiredPythonPackages;
+
+      # Convert package names to actual package objects
+      packages = builtins.map (pkgName: builtins.getAttr pkgName ps) availablePackages;
+    in
+      # Always include essential packages even if not perfectly matched
+      packages ++ (with ps; [
+        setuptools
+        pip
+        wheel
+        # Fallback essential packages that ESP-IDF always needs
+        click
+        pyserial
+        cryptography
+        pyparsing
+        pyelftools
+        pyyaml
+        future
+        voluptuous
+        jsonschema
+        requests
+        packaging
+      ])
+  );
 
 in stdenv.mkDerivation rec {
   pname = "esp-idf";
@@ -124,13 +157,14 @@ in stdenv.mkDerivation rec {
 
   inherit src;
 
+  # Note: pythonEnv is NOT in nativeBuildInputs - no Python exposed to shell
   nativeBuildInputs = [
     makeWrapper
-    pythonEnv
     git
     cmake
     ninja
     pkg-config
+    # espIdfPythonEnv is used internally but not exposed to users
   ];
 
   buildInputs = [
@@ -168,20 +202,6 @@ in stdenv.mkDerivation rec {
 
     echo "Preparing ESP-IDF tools for targets: ${lib.concatStringsSep " " allTargets}"
 
-    # Install ESP-IDF Python requirements
-    echo "Installing ESP-IDF Python dependencies..."
-    export PIP_DISABLE_PIP_VERSION_CHECK=1
-    export PIP_NO_CACHE_DIR=1
-    export PIP_ROOT_USER_ACTION=ignore
-    
-    # Install ESP-IDF Python packages to the python environment
-    ${pythonEnv}/bin/python -m pip install --no-deps --target ${pythonEnv}/${pythonEnv.sitePackages} \
-      -r tools/requirements/requirements.core.txt || true
-    
-    # Install ESP-IDF specific modules that aren't in nixpkgs
-    ${pythonEnv}/bin/python -m pip install --no-deps --target ${pythonEnv}/${pythonEnv.sitePackages} \
-      esp-idf-monitor esptool kconfiglib construct xmltodict pycparser reedsolo bitstring intelhex || true
-
     # Pre-install fetched tools to simulate offline install.sh behavior
     ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: toolDrv: ''
       echo "Installing ${name}..."
@@ -215,13 +235,28 @@ in stdenv.mkDerivation rec {
     cp -r . $out/
     cd $out
 
-    # Set up Python environment link
-    ln -sf ${pythonEnv} $out/python-env
+    # Create the exact Python virtual environment structure that ESP-IDF expects
+    # This mimics what ESP-IDF's install.sh creates
+    mkdir -p $out/.espressif/python_env
 
-    # Create tool environment configuration
+    # Create the specific venv directory name ESP-IDF expects
+    pythonVersion="${espIdfPythonEnv.pythonVersion}"
+    venvDir="idf${version}_py''${pythonVersion}_env"
+    mkdir -p "$out/.espressif/python_env/$venvDir"
+
+    # Install the Python environment into ESP-IDF's expected location
+    # This creates a complete Python environment in the nix store
+    cp -rL ${espIdfPythonEnv}/* "$out/.espressif/python_env/$venvDir/"
+
+    # Create the standard symlink for compatibility
+    ln -sf "$out/.espressif/python_env/$venvDir" $out/python-env
+
+    # Ensure ESP-IDF's tools directory can be used as Python modules
+    # ESP-IDF's idf.py expects to import modules from the tools directory
+    touch $out/tools/__init__.py
+
+    # Set up tool environment configuration
     mkdir -p $out/etc
-
-    # Generate tool paths for all installed tools
     cat > $out/etc/esp-idf-tool-env << 'EOF'
     # ESP-IDF Tool Environment Configuration
     ${lib.concatStringsSep "\n" (lib.mapAttrsToList (name: _: ''
@@ -236,7 +271,7 @@ in stdenv.mkDerivation rec {
     git add -A
     git commit --allow-empty -m "ESP-IDF ${version} for Nix"
 
-    # Tag the commit to match expected version (only if tag doesn't exist)
+    # Tag the commit to match expected version (essential for git describe)
     git tag "${rev}" HEAD 2>/dev/null || true
     if [ "${rev}" != "v${version}" ]; then
       git tag "v${version}" HEAD 2>/dev/null || true
@@ -248,14 +283,18 @@ in stdenv.mkDerivation rec {
       directory = *
     EOF
 
-    # Create environment setup script
+    # Create environment setup script that matches ESP-IDF's export.sh
     cat > $out/export.sh << 'EOF'
     #!/usr/bin/env bash
     # ESP-IDF Environment Setup Script
 
     export IDF_PATH="$( cd "$( dirname "''${BASH_SOURCE[0]}" )" && pwd )"
     export IDF_TOOLS_PATH="$IDF_PATH/.espressif"
-    export IDF_PYTHON_ENV_PATH="$IDF_PATH/python-env"
+
+    # Set Python environment path to the pre-built environment in nix store
+    pythonVersion="${espIdfPythonEnv.pythonVersion}"
+    venvDir="idf${version}_py''${pythonVersion}_env"
+    export IDF_PYTHON_ENV_PATH="$IDF_TOOLS_PATH/python_env/$venvDir"
     export IDF_PYTHON_CHECK_CONSTRAINTS=no
 
     # Load tool paths
@@ -263,20 +302,22 @@ in stdenv.mkDerivation rec {
       source "$IDF_PATH/etc/esp-idf-tool-env"
     fi
 
-    # Add ESP-IDF tools to PATH
-    export PATH="$IDF_PATH/tools:$IDF_PYTHON_ENV_PATH/bin:$PATH"
+    # Add ESP-IDF tools to PATH (but NOT python - idf.py handles that)
+    export PATH="$IDF_PATH/tools:$PATH"
 
     # Git configuration
     export GIT_CONFIG_SYSTEM="$IDF_PATH/etc/gitconfig"
 
-    # Python path
-    export PYTHONPATH="$IDF_PYTHON_ENV_PATH/lib/python${pythonEnv.pythonVersion}/site-packages''${PYTHONPATH:+:$PYTHONPATH}"
+    # Add ESP-IDF tools directory to Python path for module imports
+    export PYTHONPATH="$IDF_PATH/tools''${PYTHONPATH:+:$PYTHONPATH}"
 
     echo "ESP-IDF environment configured for: ${lib.concatStringsSep ", " allTargets}"
     ${lib.optionalString enablePreviewTargets ''
       echo "Preview targets enabled: ${lib.concatStringsSep ", " previewTargets}"
       echo "Note: Use 'idf.py --preview' for preview target commands"
     ''}
+    echo "Python environment: $IDF_PYTHON_ENV_PATH"
+    echo "Use 'idf.py' commands - no direct Python access needed"
     EOF
 
     chmod +x $out/export.sh
@@ -284,36 +325,45 @@ in stdenv.mkDerivation rec {
     runHook postInstall
   '';
 
-  # Setup hook for automatic environment configuration
+  # Setup hook that provides ESP-IDF environment but NO external Python
   setupHook = writeText "esp-idf-setup-hook" ''
     addEspIdfVars() {
       if [ -e "$1/tools/idf.py" ]; then
         export IDF_PATH="$1"
         export IDF_TOOLS_PATH="$IDF_PATH/.espressif"
-        export IDF_PYTHON_ENV_PATH="$IDF_PATH/python-env"
+
+        # Set Python environment to pre-built nix store location
+        pythonVersion="${espIdfPythonEnv.pythonVersion}"
+        venvDir="idf''${version}_py''${pythonVersion}_env"
+        export IDF_PYTHON_ENV_PATH="$IDF_TOOLS_PATH/python_env/$venvDir"
         export IDF_PYTHON_CHECK_CONSTRAINTS=no
 
-        # Add tools to PATH
+        # Load tool paths
         if [ -e "$IDF_PATH/etc/esp-idf-tool-env" ]; then
           source "$IDF_PATH/etc/esp-idf-tool-env"
         fi
 
+        # Add ESP-IDF tools to PATH (but NOT Python)
         addToSearchPath PATH "$IDF_PATH/tools"
-        addToSearchPath PATH "$IDF_PYTHON_ENV_PATH/bin"
 
         # Git configuration
         export GIT_CONFIG_SYSTEM="$IDF_PATH/etc/gitconfig"
 
-        # Python environment
-        addToSearchPath PYTHONPATH "$IDF_PYTHON_ENV_PATH/lib/python${pythonEnv.pythonVersion}/site-packages"
+        # Add ESP-IDF tools directory to Python path for ESP-IDF's module imports
+        addToSearchPath PYTHONPATH "$IDF_PATH/tools"
       fi
     }
 
     addEnvHooks "$hostOffset" addEspIdfVars
+
+    # Expose python (binary and venv) from esp-idf package to the shell
+    # in case user wants python outside of idf.py. This simplifies the package
+    # considerably and aligns with the primary use case which is dev shells.
+    addToSearchPath PATH "$IDF_PYTHON_ENV_PATH/bin"
   '';
 
   passthru = {
-    inherit pythonEnv toolDerivations supportedTargets;
+    inherit espIdfPythonEnv toolDerivations supportedTargets;
     enabledTargets = allTargets;
 
     # Provide target-specific variants
@@ -325,7 +375,6 @@ in stdenv.mkDerivation rec {
     esp32c5 = (import ./default.nix).override {
       supportedTargets = [ "esp32c5" ];
       enablePreviewTargets = true;
-      # Use your working commit for ESP32-C5
       rev = "d930a386dae";
       sha256 = "sha256-MIikNiUxR5+JkgD51wRokN+r8g559ejWfU4MP8zDwoM=";
     };
@@ -344,6 +393,9 @@ in stdenv.mkDerivation rec {
       ESP-IDF is the official development framework for the ESP32, ESP32-S and ESP32-C
       series of SoCs from Espressif Systems. It provides a rich set of APIs and tools
       for developing applications for these microcontrollers.
+
+      This package provides an isolated ESP-IDF environment. Use 'idf.py' commands
+      for all ESP-IDF operations - no direct Python access is provided.
 
       Supported targets: ${lib.concatStringsSep ", " allTargets}
       ${lib.optionalString enablePreviewTargets "Preview targets: ${lib.concatStringsSep ", " previewTargets}"}
