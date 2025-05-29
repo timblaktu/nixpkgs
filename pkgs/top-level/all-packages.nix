@@ -2917,6 +2917,25 @@ with pkgs;
     tinyxml2 = tinyxml-2;
   };
 
+  # Espressif IoT Development Framework
+  esp-idf = callPackage ../development/embedded/esp-idf { };
+  # target-specific variants
+  esp-idf-esp32 = esp-idf.override { supportedTargets = [ "esp32" ]; };
+  esp-idf-esp32s2 = esp-idf.override { supportedTargets = [ "esp32s2" ]; };
+  esp-idf-esp32s3 = esp-idf.override { supportedTargets = [ "esp32s3" ]; };
+  esp-idf-esp32c2 = esp-idf.override { supportedTargets = [ "esp32c2" ]; };
+  esp-idf-esp32c3 = esp-idf.override { supportedTargets = [ "esp32c3" ]; };
+  esp-idf-esp32c6 = esp-idf.override { supportedTargets = [ "esp32c6" ]; };
+  esp-idf-esp32h2 = esp-idf.override { supportedTargets = [ "esp32h2" ]; };
+  esp-idf-esp32p4 = esp-idf.override { supportedTargets = [ "esp32p4" ]; };
+  # preview-only variants
+  esp-idf-esp32c5 = esp-idf.override {
+    supportedTargets = [ "esp32c5" ];
+    enablePreviewTargets = true;
+    rev = "d930a386dae";
+    sha256 = "sha256-MIikNiUxR5+JkgD51wRokN+r8g559ejWfU4MP8zDwoM=";
+  };
+
   ethercalc = callPackage ../servers/web-apps/ethercalc { };
 
   evtest-qt = libsForQt5.callPackage ../applications/misc/evtest-qt { };

@@ -1,0 +1,286 @@
+tim@tblack-t14-nixos:~/src/nixpkgs$ # Test environment setup using local nixpkgs                                    nix-shell -I nixpkgs=. -p esp-idf --run 'echo "IDF_PATH: $IDF_PATH"'
+
+# Test idf.py command
+nix-shell -I nixpkgs=. -p esp-idf --run 'idf.py --list-targets'
+these 2 derivations will be built:
+  /nix/store/vvl05ffa1vrbxzkcnyqkv8bwfgcd2jk7-python3-3.12.10-env.drv
+  /nix/store/fy7q40sqvsvzxsp2ccfzcl8ivxsx97nc-esp-idf-5.4.1.drv
+building '/nix/store/vvl05ffa1vrbxzkcnyqkv8bwfgcd2jk7-python3-3.12.10-env.drv'...
+created 334 symlinks in user environment
+building '/nix/store/fy7q40sqvsvzxsp2ccfzcl8ivxsx97nc-esp-idf-5.4.1.drv'...
+Running phase: unpackPhase
+unpacking source archive /nix/store/dsdrdmjffnfck38lf8n80l7x9r0i7hqq-source
+source root is source
+Running phase: patchPhase
+Running phase: updateAutotoolsGnuConfigScriptsPhase
+Running phase: configurePhase
+Running phase: buildPhase
+Preparing ESP-IDF tools for targets: esp32 esp32s2 esp32s3 esp32c2 esp32c3 esp32c6 esp32h2 esp32p4
+Installing ESP-IDF Python dependencies...
+Ignoring importlib_metadata: markers 'python_version < "3.8"' don't match your environment
+WARNING: Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<pip._vendor.urllib3.connection.HTTPSConnection object at 0x7ffff5681850>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution')': /simple/setuptools/
+WARNING: Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<pip._vendor.urllib3.connection.HTTPSConnection object at 0x7ffff5681f40>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution')': /simple/setuptools/
+WARNING: Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<pip._vendor.urllib3.connection.HTTPSConnection object at 0x7ffff5682450>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution')': /simple/setuptools/
+WARNING: Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<pip._vendor.urllib3.connection.HTTPSConnection object at 0x7ffff5682660>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution')': /simple/setuptools/
+WARNING: Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<pip._vendor.urllib3.connection.HTTPSConnection object at 0x7ffff5682870>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution')': /simple/setuptools/
+ERROR: Could not find a version that satisfies the requirement setuptools (from versions: none)
+ERROR: No matching distribution found for setuptools
+WARNING: Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<pip._vendor.urllib3.connection.HTTPSConnection object at 0x7ffff6821580>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution')': /simple/esp-idf-monitor/
+WARNING: Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<pip._vendor.urllib3.connection.HTTPSConnection object at 0x7ffff5adea20>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution')': /simple/esp-idf-monitor/
+WARNING: Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<pip._vendor.urllib3.connection.HTTPSConnection object at 0x7ffff5679160>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution')': /simple/esp-idf-monitor/
+WARNING: Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<pip._vendor.urllib3.connection.HTTPSConnection object at 0x7ffff5679340>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution')': /simple/esp-idf-monitor/
+WARNING: Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<pip._vendor.urllib3.connection.HTTPSConnection object at 0x7ffff5679520>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution')': /simple/esp-idf-monitor/
+ERROR: Could not find a version that satisfies the requirement esp-idf-monitor (from versions: none)
+ERROR: No matching distribution found for esp-idf-monitor
+Installing esp-clang...
+/build/source
+Installing esp32ulp-elf...
+/build/source
+Installing qemu-riscv32...
+/build/source
+Installing qemu-xtensa...
+/build/source
+Installing riscv32-esp-elf...
+/build/source
+Installing riscv32-esp-elf-gdb...
+/build/source
+Installing xtensa-esp-elf...
+/build/source
+Installing xtensa-esp-elf-gdb...
+/build/source
+Running phase: installPhase
+Reinitialized existing Git repository in /nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/.git/
+warning: adding embedded git repository: components/bootloader/subproject/components/micro-ecc/micro-ecc
+hint: You've added another git repository inside your current repository.
+hint: Clones of the outer repository will not contain the contents of
+hint: the embedded repository and will not know how to obtain it.
+hint: If you meant to add a submodule, use:
+hint:
+hint:   git submodule add <url> components/bootloader/subproject/components/micro-ecc/micro-ecc
+hint:
+hint: If you added this path by mistake, you can remove it from the
+hint: index with:
+hint:
+hint:   git rm --cached components/bootloader/subproject/components/micro-ecc/micro-ecc
+hint:
+hint: See "git help submodule" for more information.
+hint: Disable this message with "git config set advice.addEmbeddedRepo false"
+warning: adding embedded git repository: components/bt/controller/lib_esp32
+warning: adding embedded git repository: components/bt/controller/lib_esp32c2/esp32c2-bt-lib
+warning: adding embedded git repository: components/bt/controller/lib_esp32c3_family
+warning: adding embedded git repository: components/bt/controller/lib_esp32c5/esp32c5-bt-lib
+warning: adding embedded git repository: components/bt/controller/lib_esp32c6/esp32c6-bt-lib
+warning: adding embedded git repository: components/bt/controller/lib_esp32h2/esp32h2-bt-lib
+warning: adding embedded git repository: components/bt/esp_ble_mesh/lib/lib
+warning: adding embedded git repository: components/bt/host/nimble/nimble
+warning: adding embedded git repository: components/cmock/CMock
+warning: adding embedded git repository: components/esp_coex/lib
+warning: adding embedded git repository: components/esp_phy/lib
+warning: adding embedded git repository: components/esp_wifi/lib
+warning: adding embedded git repository: components/heap/tlsf
+warning: adding embedded git repository: components/json/cJSON
+warning: adding embedded git repository: components/lwip/lwip
+warning: adding embedded git repository: components/mbedtls/mbedtls
+warning: adding embedded git repository: components/mqtt/esp-mqtt
+warning: adding embedded git repository: components/openthread/lib
+warning: adding embedded git repository: components/openthread/openthread
+warning: adding embedded git repository: components/protobuf-c/protobuf-c
+warning: adding embedded git repository: components/spiffs/spiffs
+warning: adding embedded git repository: components/unity/unity
+[fetchgit da22058910] ESP-IDF 5.4.1 for Nix
+ 6 files changed, 18 insertions(+), 705 deletions(-)
+ delete mode 100644 components/heap/test_multi_heap_host/Makefile
+ delete mode 100644 components/heap/test_multi_heap_host/main.cpp
+ delete mode 100755 components/heap/test_multi_heap_host/test_all_configs.sh
+ delete mode 100644 components/heap/test_multi_heap_host/test_multi_heap.cpp
+ create mode 100644 etc/esp-idf-tool-env
+ create mode 120000 python-env
+Running phase: fixupPhase
+shrinking RPATHs of ELF executables and libraries in /nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1
+shrinking /nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/tools/esp_app_trace/test/logtrace/test.elf
+patchelf: cannot find section '.dynamic'. The input file is most likely statically linked
+shrinking /nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/tools/esp_app_trace/test/sysview/sysview_tracing_heap_log.elf
+patchelf: cannot find section '.dynamic'. The input file is most likely statically linked
+shrinking /nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/tools/test_idf_tools/platform_detection/arm32_header.elf
+patchelf: program header table out of bounds
+shrinking /nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/tools/test_idf_tools/platform_detection/arm64_header.elf
+patchelf: program header table out of bounds
+shrinking /nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/tools/test_idf_tools/platform_detection/armhf_header.elf
+patchelf: program header table out of bounds
+checking for references to /build/ in /nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1...
+patchelf: cannot find section '.dynamic'. The input file is most likely statically linked
+patchelf: cannot find section '.dynamic'. The input file is most likely statically linked
+patchelf: program header table out of bounds
+patchelf: program header table out of bounds
+patchelf: program header table out of bounds
+patching script interpreter paths in /nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/export.sh: interpreter directive changed from "#!/usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/install.sh: interpreter directive changed from "#!/usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/tools/esp_app_trace/test/logtrace/test.sh: interpreter directive changed from "#!/usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/tools/esp_app_trace/test/sysview/test.sh: interpreter directive changed from "#!/usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/tools/set-submodules-to-github.sh: interpreter directive changed from "#!/usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/tools/docker/entrypoint.sh: interpreter directive changed from "#!/usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/tools/ci/build_template_app.sh: interpreter directive changed from "#!/usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/tools/ci/check_esp_memory_utils_headers.sh: interpreter directive changed from "#!/usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/tools/ci/get_supported_examples.sh: interpreter directive changed from "#!/usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/tools/ci/mirror-submodule-update.sh: interpreter directive changed from "#!/usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/tools/ci/check_api_violation.sh: interpreter directive changed from "#!/usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/tools/ci/check_examples_extra_component_dirs.sh: interpreter directive changed from "#!/usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/tools/ci/multirun_with_pyenv.sh: interpreter directive changed from "#!/usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/tools/ci/get-full-sources.sh: interpreter directive changed from "#!/usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/tools/ci/test_configure_ci_environment.sh: interpreter directive changed from "#!/usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/tools/ci/fix_empty_prototypes.sh: interpreter directive changed from "#!/usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/tools/ci/push_to_github.sh: interpreter directive changed from "#!/usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/tools/ci/check_idf_version.sh: interpreter directive changed from "#!/usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/tools/format.sh: interpreter directive changed from "#!/usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/scripts/ecc-heap.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/scripts/memory.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/scripts/lcov.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/scripts/tmp_ignore_makefiles.sh: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/scripts/output_env.sh: interpreter directive changed from "#! /usr/bin/env sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/scripts/prepare_release.sh: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/scripts/apidoc_full.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/scripts/footprint.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/scripts/bump_version.sh: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/tests/git-scripts/pre-push.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/tests/opt-testcases/tls13-kex-modes.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/tests/opt-testcases/tls13-misc.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/tests/opt-testcases/tls13-compat.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/tests/scripts/basic-in-docker.sh: interpreter directive changed from "#!/bin/bash -eu" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash -eu"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/tests/scripts/all.sh: interpreter directive changed from "#! /usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/tests/scripts/travis-log-failure.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/tests/scripts/basic-build-test.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/tests/scripts/list-identifiers.sh: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/tests/scripts/quiet/make: interpreter directive changed from "#! /usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/tests/scripts/quiet/cmake: interpreter directive changed from "#! /usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/tests/scripts/generate-afl-tests.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/tests/scripts/check-generated-files.sh: interpreter directive changed from "#! /usr/bin/env sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/tests/scripts/all-in-docker.sh: interpreter directive changed from "#!/bin/bash -eu" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash -eu"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/tests/scripts/check-python-files.sh: interpreter directive changed from "#! /usr/bin/env sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/tests/scripts/run-metatests.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/tests/scripts/doxygen.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/tests/scripts/docker_env.sh: interpreter directive changed from "#!/bin/bash -eu" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash -eu"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/tests/compat-in-docker.sh: interpreter directive changed from "#!/bin/bash -eu" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash -eu"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/tests/make-in-docker.sh: interpreter directive changed from "#!/bin/bash -eu" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash -eu"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/tests/context-info.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/tests/compat.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/tests/ssl-opt-in-docker.sh: interpreter directive changed from "#!/bin/bash -eu" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash -eu"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/tests/ssl-opt.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/programs/test/udp_proxy_wrapper.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/programs/test/generate_cpp_dummy_build.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/programs/test/dlopen_demo.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/programs/psa/psa_hash_demo.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/programs/psa/key_ladder_demo.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/docs/architecture/psa-migration/outcome-analysis.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mbedtls/mbedtls/docs/architecture/psa-migration/syms.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/esp_wifi/lib/fix_printf.sh: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/esp_wifi/test_md5/test_md5.sh: interpreter directive changed from "#!/usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/protobuf-c/protobuf-c/autogen.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/protobuf-c/protobuf-c/.commit_docs.sh: interpreter directive changed from "#!/bin/bash -e" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash -e"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/json/cJSON/fuzzing/afl.sh: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/json/cJSON/fuzzing/ossfuzz.sh: interpreter directive changed from "#!/bin/bash -eu" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash -eu"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/json/cJSON/fuzzing/afl-prepare-linux.sh: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mqtt/esp-mqtt/ci/set_idf.sh: interpreter directive changed from "#!/usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mqtt/esp-mqtt/ci/modify_for_legacy_idf.sh: interpreter directive changed from "#!/usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mqtt/esp-mqtt/ci/set_mqtt.sh: interpreter directive changed from "#!/usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/mqtt/esp-mqtt/ci/build_examples.sh: interpreter directive changed from "#!/usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/esp_coex/lib/fix_printf.sh: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/esp_coex/test_md5/test_md5.sh: interpreter directive changed from "#!/usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/script/check-posix-build-cmake: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/script/check-posix-pty: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/script/code-spell: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/script/check-scan-build: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/script/check-core-makefiles: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/script/cmake-build: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/script/clang-format-check: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/script/check-simulation-local-host: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/script/git-tool: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/script/make-pretty: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/script/check-posix-build: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/script/test: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/script/check-arm-build: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/script/check-gn-build: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/script/clang-format: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/script/check-api-version: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/script/package: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/script/check-size: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/script/clang-tidy: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/script/check-simulation-build-cmake: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/script/gcda-tool: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/script/bootstrap: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/script/check-simulation-build: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/tests/nexus/build.sh: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/tests/toranj/build.sh: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/tests/toranj/start.sh: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/tests/fuzz/oss-fuzz-build: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/tools/harness-automation/start.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/tools/gerrit/git-squash-merge.sh: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/tools/tcat_ble_client/auth-generate/create-cert-tcat-commissioner.sh: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/tools/tcat_ble_client/auth-generate/create-cert-ca.sh: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/tools/tcat_ble_client/auth-generate/create-cert-tcat-device.sh: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/tools/harness-simulation/posix/install.sh: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/tools/harness-simulation/posix/etc/commissionerd: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/scripts/ecc-heap.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/scripts/memory.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/scripts/lcov.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/scripts/tmp_ignore_makefiles.sh: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/scripts/output_env.sh: interpreter directive changed from "#! /usr/bin/env sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/scripts/prepare_release.sh: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/scripts/apidoc_full.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/scripts/footprint.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/scripts/bump_version.sh: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/tests/git-scripts/pre-push.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/tests/opt-testcases/tls13-kex-modes.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/tests/opt-testcases/tls13-misc.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/tests/opt-testcases/tls13-compat.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/tests/data_files/dir-maxpath/long.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/tests/scripts/basic-in-docker.sh: interpreter directive changed from "#!/bin/bash -eu" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash -eu"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/tests/scripts/all.sh: interpreter directive changed from "#! /usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/tests/scripts/travis-log-failure.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/tests/scripts/basic-build-test.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/tests/scripts/list-identifiers.sh: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/tests/scripts/quiet/make: interpreter directive changed from "#! /usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/tests/scripts/quiet/cmake: interpreter directive changed from "#! /usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/tests/scripts/generate-afl-tests.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/tests/scripts/check-generated-files.sh: interpreter directive changed from "#! /usr/bin/env sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/tests/scripts/all-in-docker.sh: interpreter directive changed from "#!/bin/bash -eu" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash -eu"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/tests/scripts/check-python-files.sh: interpreter directive changed from "#! /usr/bin/env sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/tests/scripts/run-metatests.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/tests/scripts/doxygen.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/tests/scripts/docker_env.sh: interpreter directive changed from "#!/bin/bash -eu" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash -eu"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/tests/compat-in-docker.sh: interpreter directive changed from "#!/bin/bash -eu" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash -eu"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/tests/make-in-docker.sh: interpreter directive changed from "#!/bin/bash -eu" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash -eu"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/tests/context-info.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/tests/compat.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/tests/ssl-opt-in-docker.sh: interpreter directive changed from "#!/bin/bash -eu" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash -eu"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/tests/ssl-opt.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/programs/test/udp_proxy_wrapper.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/programs/test/generate_cpp_dummy_build.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/programs/test/dlopen_demo.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/programs/psa/psa_hash_demo.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/programs/psa/key_ladder_demo.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/docs/architecture/psa-migration/outcome-analysis.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/openthread/openthread/third_party/mbedtls/repo/docs/architecture/psa-migration/syms.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/heap/test_multi_heap_host/test_all_configs.sh: interpreter directive changed from "#!/usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/esp_phy/lib/fix_printf.sh: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/bt/host/nimble/nimble/porting/update_generated_files.sh: interpreter directive changed from "#!/usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/bt/host/nimble/nimble/babblesim/hw/bsp/nrf52_bsim/nordic_pca10040_download.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/bt/host/nimble/nimble/babblesim/hw/bsp/nrf52_bsim/nordic_pca10040_debug.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/bt/host/nimble/nimble/babblesim/sdk/scripts/link_nrfx.sh: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/bt/host/nimble/nimble/babblesim/sdk/scripts/link_babblesim.sh: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/lwip/lwip/test/ci/unit_tests.sh: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/lwip/lwip/test/ci/test_apps.sh: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/lwip/lwip/test/ci/validate_opts.sh: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/lwip/lwip/contrib/ports/unix/setup-tapif: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/lwip/lwip/contrib/ports/unix/example_app/iteropts.sh: interpreter directive changed from "#!/bin/bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/lwip/lwip/codespell_check.sh: interpreter directive changed from "#!/usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/components/lwip/lwip/doc/doxygen/generate.sh: interpreter directive changed from "#!/bin/sh" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/sh"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/docs/check_lang_folder_sync.sh: interpreter directive changed from "#!/usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/examples/common_components/protocol_examples_tapif_io/make_tap_netif: interpreter directive changed from "#!/usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/examples/build_system/cmake/idf_as_lib/run-esp32.sh: interpreter directive changed from "#!/usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/examples/build_system/cmake/idf_as_lib/build.sh: interpreter directive changed from "#!/usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+/nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1/examples/build_system/cmake/idf_as_lib/run.sh: interpreter directive changed from "#!/usr/bin/env bash" to "/nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash"
+IDF_PATH: /nix/store/b2nd0qis4k99ypjxslgrbwnqh2pczhh2-esp-idf-5.4.1
+No module named 'esp_idf_monitor'
+This usually means that "idf.py" was not spawned within an ESP-IDF shell environment or the python virtual environment used by "idf.py" is corrupted.
+Please use idf.py only in an ESP-IDF shell environment. If problem persists, please try to install ESP-IDF tools again as described in the Get Started guide.
