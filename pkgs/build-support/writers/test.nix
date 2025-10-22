@@ -1,15 +1,15 @@
-{
-  haskellPackages,
-  lib,
-  guile-lib,
-  akkuPackages,
-  nodePackages,
-  perlPackages,
-  python3Packages,
-  runCommand,
-  testers,
-  writers,
-  writeText,
+{ haskellPackages
+, lib
+, guile-lib
+, akkuPackages
+, nodePackages
+, perlPackages
+, python3Packages
+, runCommand
+, testers
+, writers
+, writeText
+,
 }:
 
 # If you are reading this, you can test these writers by running: nix-build . -A tests.writers
@@ -18,6 +18,9 @@ let
   inherit (lib) getExe recurseIntoAttrs;
 
   inherit (writers)
+    autoWriter
+    autoWriterBin
+    debugAutoWriter
     makeFSharpWriter
     writeBash
     writeBashBin
@@ -604,6 +607,113 @@ recurseIntoAttrs {
           touch $out
         else
           echo "Error: Empty wrapper was created" >&2
+          exit 1
+        fi
+      '';
+  };
+
+  # autoWriter tests - automatic file type detection and writer selection
+  auto = recurseIntoAttrs {
+    # Test extension-based detection  
+    bash-extension = expectSuccess (
+      autoWriter {
+        path = "test-script.sh";
+        content = ''echo "success"'';
+      }
+    );
+
+    python-extension = expectSuccess (
+      autoWriter {
+        path = "test-script.py";
+        content = ''
+          #!/usr/bin/env python3
+          print("success")
+        '';
+        options = { doCheck = false; }; # Skip flake8 for test
+      }
+    );
+
+    # Test shebang-based detection overrides extension
+    bash-shebang-override = expectSuccess (
+      autoWriter {
+        path = "weird-file.py.rs.js"; # Confusing extensions
+        content = ''
+          #!/bin/bash
+          echo "success"
+        '';
+      }
+    );
+
+    python-shebang-override = expectSuccess (
+      autoWriter {
+        path = "script.sh.txt"; # Confusing extensions  
+        content = ''
+          #!/usr/bin/env python3
+          print("success")
+        '';
+        options = { doCheck = false; };
+      }
+    );
+
+    # Test fallback to writeText for unknown types
+    text-fallback = expectDataEqual {
+      file = autoWriter {
+        path = "unknown.xyz";
+        content = "success";
+      };
+      expected = "success";
+    };
+
+    # Test autoWriterBin variant
+    bin-variant = expectSuccessBin (
+      autoWriterBin {
+        name = "test-auto-bin";
+        content = ''
+          #!/bin/bash
+          echo "success"
+        '';
+      }
+    );
+
+    # Test dependency handling for Python
+    python-with-deps = expectSuccess (
+      autoWriter {
+        path = "script-with-deps.py";
+        content = ''
+          #!/usr/bin/env python3
+          # This would normally import something from deps
+          print("success")
+        '';
+        deps = [ python3Packages.setuptools ]; # Test that deps are accepted
+        options = { doCheck = false; };
+      }
+    );
+
+    # Test options passing for Rust  
+    rust-with-options = expectSuccess (
+      autoWriter {
+        path = "program.rs";
+        content = ''
+          fn main() {
+              println!("success");
+          }
+        '';
+        options = { strip = false; }; # Test that options are passed through
+      }
+    );
+
+    # Test debugging helper
+    debug-detection =
+      let
+        debugResult = debugAutoWriter "test.py" "#!/usr/bin/env python3\nprint('test')";
+      in
+      runCommand "test-debug-auto-writer" { } ''
+        # Test that debug function returns expected structure
+        if [[ "${debugResult.detectedType}" == "writePython3" ]]; then
+          echo "Debug detection working correctly"
+          touch $out
+        else
+          echo "Debug detection failed: got ${debugResult.detectedType}"
           exit 1
         fi
       '';
