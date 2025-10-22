@@ -95,6 +95,7 @@ let
       filesystem = callLibs ./filesystem.nix;
       fileset = callLibs ./fileset;
       sources = callLibs ./sources.nix;
+      fileTypes = callLibs ./file-types.nix;
 
       # back-compat aliases
       platforms = self.systems.doubles;
