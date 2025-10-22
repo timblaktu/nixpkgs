@@ -162,10 +162,63 @@ rec {
     , options ? { }
     ,
     }:
-    autoWriter {
-      path = "/bin/${name}";
-      inherit content deps options;
-    };
+    let
+      # Detect the appropriate writer type
+      writerType = fileTypes.getWriterType name content;
+
+      # Convert to Bin variant (writeBash -> writeBashBin)
+      binWriterType =
+        if lib.hasPrefix "write" writerType && writerType != "writeText"
+        then "${writerType}Bin"
+        else "writeTextFile";
+
+      # Get the writer function
+      writer = writers.${binWriterType} or (
+        if binWriterType == "writeTextFile"
+        then pkgs.writeTextFile
+        else writers.writeTextFile
+      );
+
+      # Handle different writer signatures for bin variants
+      callBinWriter = binWriterType: writer: name: content: deps: options:
+        if binWriterType == "writeTextFile" then
+        # writeTextFile with executable option
+          writer
+            {
+              name = name;
+              text = content;
+              executable = true;
+            }
+
+        else if binWriterType == "writePython3Bin" then
+        # Python bin writers: name -> { deps, options... } -> content
+          writer name (options // { libraries = deps; }) content
+
+        else if binWriterType == "writeRustBin" then
+        # Rust bin writer: name -> { options... } -> content (deps ignored)
+          writer name options content
+
+        else if binWriterType == "writeHaskellBin" then
+        # Haskell bin writer: name -> { deps, options... } -> content  
+          writer name (options // { libraries = deps; }) content
+
+        else if lib.hasPrefix "write" binWriterType && lib.hasSuffix "Bin" binWriterType then
+        # Most script bin writers: name -> content or name -> options -> content
+          if options == { } then
+            writer name content
+          else
+            writer name options content
+
+        else
+        # Fallback to writeTextFile with executable
+          pkgs.writeTextFile {
+            name = name;
+            text = content;
+            executable = true;
+          };
+
+    in
+    callBinWriter binWriterType writer name content deps options;
 
   /**
     Debug helper to show what writer would be selected for given file characteristics.
