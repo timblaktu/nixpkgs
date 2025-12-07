@@ -1,9 +1,9 @@
-{
-  stdenv,
-  lib,
-  fetchFromGitHub,
-  fetchpatch,
-  cmake,
+{ stdenv
+, lib
+, fetchFromGitHub
+, fetchpatch
+, cmake
+,
 }:
 let
   testData = fetchFromGitHub {
@@ -15,13 +15,13 @@ let
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "nlohmann_json";
-  version = "3.12.0";
+  version = "3.11.3";
 
   src = fetchFromGitHub {
     owner = "nlohmann";
     repo = "json";
     rev = "v${finalAttrs.version}";
-    hash = "sha256-cECvDOLxgX7Q9R3IE86Hj9JJUxraDQvhoyPDF03B2CY=";
+    hash = "sha256-7F0Jon+1oWL7uqet5i1IgHX0fUw/+z0QwEcA3zs5xHg=";
   };
 
   patches = lib.optionals stdenv.hostPlatform.isMusl [
