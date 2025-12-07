@@ -1,24 +1,24 @@
-{
-  lib,
-  buildPythonPackage,
-  fetchFromGitHub,
-  cmake,
-  pkg-config,
-  cxxopts,
-  setuptools,
-  pybind11,
-  zlib,
-  nlohmann_json,
-  utf8cpp,
-  libjpeg,
-  qpdf,
-  loguru-cpp,
-  # python dependencies
-  tabulate,
-  pillow,
-  pydantic,
-  docling-core,
-  pytestCheckHook,
+{ lib
+, buildPythonPackage
+, fetchFromGitHub
+, cmake
+, pkg-config
+, cxxopts
+, setuptools
+, pybind11
+, zlib
+, nlohmann_json
+, utf8cpp
+, libjpeg
+, qpdf
+, loguru-cpp
+, # python dependencies
+  tabulate
+, pillow
+, pydantic
+, docling-core
+, pytestCheckHook
+,
 }:
 
 buildPythonPackage rec {
@@ -27,10 +27,10 @@ buildPythonPackage rec {
   pyproject = true;
 
   src = fetchFromGitHub {
-    owner = "docling-project";
+    owner = "timblaktu";
     repo = "docling-parse";
-    tag = "v${version}";
-    hash = "sha256-8eHYMvfjPuGgrgrlqEh061ug+yer+1nQLbeDR1dQu68=";
+    rev = "fix/boolean-t-wrapper"; # PR #184 fix for nlohmann_json bool conversion
+    hash = "sha256-EXvdtOFMpljUEtENtjLRkUK8y4Uu1cyKeTdSlCOlHjA=";
   };
 
   postPatch = ''
