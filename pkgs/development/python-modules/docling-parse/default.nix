@@ -29,8 +29,8 @@ buildPythonPackage rec {
   src = fetchFromGitHub {
     owner = "timblaktu";
     repo = "docling-parse";
-    rev = "fix/boolean-t-wrapper"; # PR #184 fix for nlohmann_json bool conversion
-    hash = "sha256-EXvdtOFMpljUEtENtjLRkUK8y4Uu1cyKeTdSlCOlHjA=";
+    rev = "fix/boolean-t-wrapper"; # Complete bool conversion fixes for nlohmann_json 3.12
+    hash = "sha256-ywmkifH+uAL/7UYLWxNvwnyTVLF7UBiM2S0QbJG9osQ=";
   };
 
   postPatch = ''
